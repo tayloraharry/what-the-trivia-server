@@ -11,7 +11,7 @@
     "socket.io": "^4.4.1",
     "ts-node": "^10.6.0",
     "typescript": "^4.6.2",
-    "what-the-trivia-types": "^1.0.2"
+    "what-the-trivia-types": "^1.0.19"
   },
   "scripts": {
     "dev": "set PORT=5000 && nodemon index.ts",

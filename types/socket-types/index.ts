@@ -13,7 +13,6 @@ interface IUserJoinedObject {
 }
 
 export interface ServerToClientEvents {
-  roomCodeGenerated: (roomCode: string) => void;
   userJoined: (userJoiendObject: IUserJoinedObject) => void;
   gameStarted: (room: IRoomObject) => void;
   gameUpdate: (room: IRoomObject) => void;
@@ -25,6 +24,7 @@ export interface ClientToServerEvents {
   startGame: (roomId: string, cb: Function) => void;
   startNextQuestion: (roomId: string) => void;
   answerSubmitted: (roomId: string, userId: number, answer: string) => void;
+  expireCurrentQuestion: (roomId: string) => void;
 }
 
 export interface InterServerEvents {

@@ -36,7 +36,7 @@ io.on("connection", (socket) => {
   getQuestions().then((questions) => {
     const newRoom = new RoomObject(socket.id, questions);
     rooms.push(newRoom);
-    socket.emit("roomCodeGenerated", newRoom.code);
+    socket.emit("gameUpdate", newRoom);
   });
 
   //TODO add error handling when trivia api fails
@@ -78,9 +78,6 @@ io.on("connection", (socket) => {
     const room = rooms.filter((r) => r.id === roomId)[0];
     room.setNextQuestion();
     io.in(room.id).emit("gameUpdate", room);
-    setTimeout(() => {
-      io.in(room.id).emit("gameUpdate", room);
-    }, 15000)
   });
 
   socket.on("answerSubmitted", (roomId, userId, answer) => {
@@ -88,6 +85,13 @@ io.on("connection", (socket) => {
     room.submitAnswer(userId, answer);
     io.in(room.id).emit("gameUpdate", room);
   });
+  
+  socket.on("expireCurrentQuestion", (roomId) => {
+    const room = rooms.filter((r) => r.id === roomId)[0];
+    room.expireCurrentQuestion();
+    io.in(room.id).emit("gameUpdate", room);
+  });
+  
 });
 
 http.listen(port, () => {
